@@ -1,10 +1,14 @@
-seeds/
+# Seeds Directory
+
 Scripts that populate the database with initial data that the app needs to function, or test data for development.
 
-Types of Seeds
-Required Seeds (always run)
+## Types of Seeds
+
+### Required Seeds (Always Run)
+
 Data your app cannot function without:
 
+```typescript
 // roles.seed.ts — the app needs these roles to exist
 await dataSource.query(`
 INSERT INTO roles (name, description) VALUES
@@ -14,7 +18,9 @@ INSERT INTO roles (name, description) VALUES
     ('admin', 'Full system access')
   ON CONFLICT (name) DO NOTHING;
 `);
+```
 
+```typescript
 // food-categories.seed.ts — default food categories
 await dataSource.query(`
 INSERT INTO food_categories (name) VALUES
@@ -25,9 +31,13 @@ INSERT INTO food_categories (name) VALUES
     ('Beverages')
   ON CONFLICT (name) DO NOTHING;
 `);
-Development Seeds (dev only)
+```
+
+### Development Seeds (Dev Only)
+
 Fake data to make development easier:
 
+```typescript
 // dev-restaurants.seed.ts — sample restaurants for testing
 await dataSource.query(`
 INSERT INTO restaurants (name, address, is_halal_certified) VALUES
@@ -36,36 +46,15 @@ INSERT INTO restaurants (name, address, is_halal_certified) VALUES
     ('The Spice House', '789 Elm Rd', true)
   ON CONFLICT DO NOTHING;
 `);
-Key Rule: Idempotent
+```
+
+## Key Rule: Idempotent
+
 Seeds must be safe to run multiple times without creating duplicates. Always use:
 
-INSERT ... ON CONFLICT DO NOTHING
-Or check IF NOT EXISTS before inserting
+- `INSERT ... ON CONFLICT DO NOTHING`
+or check `IF NOT EXISTS` before inserting.
 
-// GOOD — safe to run many times
+```sql
+-- GOOD — safe to run many times
 INSERT INTO roles (name) VALUES ('admin') ON CONFLICT (name) DO NOTHING;
-
-// BAD — creates duplicate admin every time you run it
-INSERT INTO roles (name) VALUES ('admin');
-Seed File Structure
-
-// example.seed.ts
-import { DataSource } from 'typeorm';
-
-export const seedRoles = async (dataSource: DataSource): Promise<void> => {
-  await dataSource.query(`
-INSERT INTO roles (name, description) VALUES
-      ('customer', 'App user'),
-      ('admin', 'System admin')
-    ON CONFLICT (name) DO NOTHING;
-  `);
-  console.log('Roles seeded successfully');
-};
-Running Seeds
-
-npm run seed:run
-Rules
-Always idempotent — running twice must not create duplicates
-Separate required vs. dev seeds — don't put fake data in production seeds
-Run after migrations — seeds assume tables already exist
-Keep seeds updated — if you add a new required column, update the seed too

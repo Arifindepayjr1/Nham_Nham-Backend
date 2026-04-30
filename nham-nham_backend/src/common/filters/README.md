@@ -1,9 +1,12 @@
-filters/
+# Filters
+
 Exception filters that catch errors and return consistent error responses to the Flutter app.
 
-Why Filters Matter
+## Why Filters Matter
+
 Without filters, different errors return different response shapes — your Flutter app would need to handle many formats. Filters ensure every error looks the same:
 
+```json
 {
   "statusCode": 400,
   "message": "Email already exists",
@@ -11,9 +14,13 @@ Without filters, different errors return different response shapes — your Flut
   "timestamp": "2024-01-15T10:30:00.000Z",
   "path": "/api/v1/auth/register"
 }
-Common Filters for Nham Nham
-HttpExceptionFilter — Catch all HTTP errors
+```
 
+## Common Filters for Nham Nham
+
+### HttpExceptionFilter — Catch all HTTP errors
+
+```typescript
 // http-exception.filter.ts
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 
@@ -33,12 +40,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
     });
   }
 }
-DatabaseExceptionFilter — Catch PostgreSQL errors
+```
 
+### DatabaseExceptionFilter — Catch PostgreSQL errors
+
+```typescript
 // database-exception.filter.ts
 // Catches errors like: duplicate key, foreign key violation, etc.
-// Converts raw PostgreSQL errors into user-friendly messages
-Rules
-File naming: kebab-case.filter.ts
-Register globally in main.ts or app.module.ts so they apply everywhere
-Always return the same JSON shape — your Flutter team should only need one error model
+// Converts raw PostgreSQL errors into user-friendly messages.
+```
+
+Rules:
+
+- File naming: kebab-case.filter.ts
+- Register globally in `main.ts` or `app.module.ts` so they apply everywhere.
+- Always return the same JSON shape — your Flutter team should only need one error model.
