@@ -15,21 +15,21 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
+          # Metadata variables
+          REPO_NAME="${{ github.repository }}"
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          AUTHOR="${{ github.actor }}"
           COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
           
-          # Using a heredoc to prevent shell injection or formatting errors
-          MESSAGE=$(cat <<EOF
-          🚀 New Push Detected!
-
-          Repo: ${{ github.repository }}
-          Branch: ${{ github.ref_name }}
-          Author: ${{ github.actor }}
-          Commit: ${{ github.event.head_commit.message }}
-
-          View Commit: $COMMIT_URL
-          EOF
-          )
+          # Constructing a clean, modern HTML message
+          # <b> for bold, <i> for italics, <a href=""> for links
+          MESSAGE="<b>🚀 New Push Detected!</b>%0A%0A"
+          MESSAGE+="<b>Project:</b> <code>$REPO_NAME</code>%0A"
+          MESSAGE+="<b>Author:</b> @$AUTHOR%0A"
+          MESSAGE+="<b>Message:</b> <i>$COMMIT_MSG</i>%0A%0A"
+          MESSAGE+="<a href='$COMMIT_URL'>🔗 View Change on GitHub</a>"
 
           curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
-            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
-            --data-urlencode "text=$MESSAGE"
+            -d "chat_id=$TELEGRAM_CHAT_ID" \
+            -d "parse_mode=HTML" \
+            -d "text=$MESSAGE"
