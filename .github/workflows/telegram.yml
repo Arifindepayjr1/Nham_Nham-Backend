@@ -11,22 +11,25 @@ jobs:
 
     steps:
       - name: Send Telegram Message
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-
+          
+          # Using a heredoc to prevent shell injection or formatting errors
           MESSAGE=$(cat <<EOF
-🚀 New Push Detected!
+          🚀 New Push Detected!
 
-📦 Repo: ${{ github.repository }}
-🌿 Branch: ${{ github.ref_name }}
-👤 Author: ${{ github.actor }}
-📝 Commit: ${{ github.event.head_commit.message }}
+          Repo: ${{ github.repository }}
+          Branch: ${{ github.ref_name }}
+          Author: ${{ github.actor }}
+          Commit: ${{ github.event.head_commit.message }}
 
-🔗 View Commit: $COMMIT_URL
-EOF
-)
+          View Commit: $COMMIT_URL
+          EOF
+          )
 
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d parse_mode="Markdown" \
-            --data-urlencode text="$MESSAGE"
+          curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
+            --data-urlencode "text=$MESSAGE"
