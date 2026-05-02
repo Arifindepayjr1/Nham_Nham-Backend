@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — NhamNham API</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff18;
+            border-radius: 50%;
+            animation: twinkle var(--d) infinite var(--delay);
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 3rem 2rem;
+            max-width: 560px;
+            width: 100%;
+        }
+
+        .api-badge {
+            display: inline-block;
+            background: #12122a;
+            border: 1px solid #2a2a5a;
+            color: #7f77dd;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .code-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-404 {
+            font-size: 120px;
+            font-weight: 800;
+            letter-spacing: -6px;
+            line-height: 1;
+            color: #1a1a30;
+            position: relative;
+            user-select: none;
+        }
+
+        .code-404 .zero {
+            color: #c8c8e8;
+        }
+
+        .code-404 .four {
+            color: #e05c5c;
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 3px;
+            top: 0;
+            color: #5ce0d8;
+            clip-path: inset(0 0 60% 0);
+            animation: glitch-top 3s infinite;
+        }
+
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: -3px;
+            top: 0;
+            color: #e05c5c;
+            clip-path: inset(60% 0 0 0);
+            animation: glitch-bot 2.5s infinite;
+        }
+
+        @keyframes glitch-top {
+
+            0%,
+            88%,
+            100% {
+                clip-path: inset(0 0 100% 0);
+                transform: none;
+            }
+
+            90% {
+                clip-path: inset(10% 0 50% 0);
+                transform: translateX(-3px);
+            }
+
+            92% {
+                clip-path: inset(30% 0 40% 0);
+                transform: translateX(3px);
+            }
+
+            94% {
+                clip-path: inset(0 0 100% 0);
+            }
+        }
+
+        @keyframes glitch-bot {
+
+            0%,
+            82%,
+            100% {
+                clip-path: inset(100% 0 0 0);
+                transform: none;
+            }
+
+            84% {
+                clip-path: inset(60% 0 10% 0);
+                transform: translateX(3px);
+            }
+
+            87% {
+                clip-path: inset(70% 0 5% 0);
+                transform: translateX(-3px);
+            }
+
+            89% {
+                clip-path: inset(100% 0 0 0);
+            }
+        }
+
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #8888bb;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.02em;
+        }
+
+        .route-display {
+            font-size: 13px;
+            color: #444466;
+            margin-bottom: 2rem;
+        }
+
+        .route-display span {
+            color: #7f77dd;
+        }
+
+        .terminal {
+            background: #0c0c1a;
+            border: 1px solid #1e1e3a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .terminal-bar {
+            background: #14142a;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #1e1e3a;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-r {
+            background: #e05c5c;
+        }
+
+        .dot-y {
+            background: #e0c05c;
+        }
+
+        .dot-g {
+            background: #5ce080;
+        }
+
+        .terminal-title {
+            font-size: 11px;
+            color: #33335a;
+            margin-left: auto;
+            letter-spacing: 0.05em;
+        }
+
+        .terminal-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .line {
+            font-size: 13px;
+            line-height: 2;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .t-prompt {
+            color: #5ce0d8;
+        }
+
+        .t-method {
+            color: #7f77dd;
+            font-weight: 600;
+        }
+
+        .t-url {
+            color: #c8c8e8;
+        }
+
+        .t-err {
+            color: #e05c5c;
+        }
+
+        .t-ok {
+            color: #5ce080;
+        }
+
+        .t-dim {
+            color: #33334a;
+        }
+
+        .t-warn {
+            color: #e0c05c;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #1a1a30;
+            margin: 8px 0;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: #5ce0d8;
+            vertical-align: middle;
+            animation: blink 1.1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .routes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .route-chip {
+            background: #0f0f20;
+            border: 1px solid #1e1e38;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .method-tag {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .get {
+            background: #0a2a1a;
+            color: #5ce080;
+            border: 1px solid #5ce08033;
+        }
+
+        .post {
+            background: #1a1a0a;
+            color: #e0c05c;
+            border: 1px solid #e0c05c33;
+        }
+
+        .put {
+            background: #0a1a2a;
+            color: #5cb8e0;
+            border: 1px solid #5cb8e033;
+        }
+
+        .del {
+            background: #2a0a0a;
+            color: #e05c5c;
+            border: 1px solid #e05c5c33;
+        }
+
+        .route-path {
+            color: #555577;
+            font-size: 11px;
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 11px;
+            color: #2a2a44;
+        }
+
+        .footer-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #2a2a44;
+        }
+
+        .scan-line {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #5ce0d822, #5ce0d844, #5ce0d822, transparent);
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes scan {
+            0% {
+                top: -2px;
+            }
+
+            100% {
+                top: 100vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scan-line"></div>
+
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="api-badge">NhamNham Backend API</div>
+
+        <div class="code-wrap">
+            <div class="code-404">
+                <span class="four glitch" data-text="4">4</span><span class="zero">0</span><span class="four glitch"
+                    data-text="4">4</span>
+            </div>
+        </div>
+
+        <p class="subtitle">Route not found</p>
+        <p class="route-display">
+            <span id="req-method">GET</span> &nbsp;<span id="req-path">/api/unknown</span>
+            &nbsp;did not match any route
+        </p>
+
+        <div class="terminal">
+            <div class="terminal-bar">
+                <div class="dot dot-r"></div>
+                <div class="dot dot-y"></div>
+                <div class="dot dot-g"></div>
+                <span class="terminal-title">nham-nham ~ api-log</span>
+            </div>
+            <div class="terminal-body">
+                <div class="line">
+                    <span class="t-prompt">$</span>
+                    <span class="t-method" id="term-method">GET</span>
+                    <span class="t-url" id="term-path">/api/unknown</span>
+                </div>
+                <div class="line">
+                    <span class="t-err">✕ 404</span>
+                    <span class="t-dim">Cannot resolve route — no handler registered</span>
+                </div>
+                <hr class="divider">
+                <div class="line">
+                    <span class="t-warn">!</span>
+                    <span class="t-dim">Did you mean one of these?</span>
+                </div>
+                <div class="line"><span class="t-ok">✓</span><span class="t-dim">/api/location</span></div>
+                <div class="line"><span class="t-ok">✓</span><span class="t-dim">/api/order</span></div>
+                <div class="line"><span class="t-ok">✓</span><span class="t-dim">/api/restaurant</span></div>
+                <div class="line"><span class="t-ok">✓</span><span class="t-dim">/api/auth</span></div>
+                <hr class="divider">
+                <div class="line">
+                    <span class="t-dim">timestamp:</span>
+                    <span class="t-url" id="ts"></span>
+                </div>
+                <div class="line t-dim">$ <span class="cursor"></span></div>
+            </div>
+        </div>
+
+        <div class="routes-grid">
+            <div class="route-chip">
+                <span class="method-tag get">GET</span>
+                <span class="route-path">/api/location</span>
+            </div>
+            <div class="route-chip">
+                <span class="method-tag post">POST</span>
+                <span class="route-path">/api/order</span>
+            </div>
+            <div class="route-chip">
+                <span class="method-tag get">GET</span>
+                <span class="route-path">/api/restaurant</span>
+            </div>
+            <div class="route-chip">
+                <span class="method-tag post">POST</span>
+                <span class="route-path">/api/auth/login</span>
+            </div>
+            <div class="route-chip">
+                <span class="method-tag put">PUT</span>
+                <span class="route-path">/api/order/:id</span>
+            </div>
+            <div class="route-chip">
+                <span class="method-tag del">DEL</span>
+                <span class="route-path">/api/location/:id</span>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="footer">
+            <span>NhamNham API v1.0</span>
+            <div class="footer-dot"></div>
+            <span>NestJS + TypeORM</span>
+            <div class="footer-dot"></div>
+            <span>Status 404</span>
+        </div>
+    </div>
+
+    <script>
+        const stars = document.getElementById('stars');
+        for (let i = 0; i < 80; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${2 + Math.random() * 4}s;--delay:${Math.random() * 4}s`;
+            stars.appendChild(s);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const method = params.get('method') || 'GET';
+        const path = params.get('path') || window.location.pathname;
+
+        document.getElementById('req-method').textContent = method;
+        document.getElementById('req-path').textContent = path;
+        document.getElementById('term-method').textContent = method;
+        document.getElementById('term-path').textContent = path;
+        document.getElementById('ts').textContent = new Date().toISOString();
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModuleAsyncOptions } from "@nestjs/typeorm";
-import { Location } from "src/common/embedded/entities/location.entity";
+import { Location } from "src/modules/location/entities/location.entity";
 import { AddOnOptionGroup } from "src/modules/add-on/entities/add-on-option-group.entity";
 import { AddOnOption } from "src/modules/add-on/entities/add-on-option.entity";
 import { User } from "src/modules/auth/entities/user.entity";
@@ -13,7 +13,7 @@ import { Food } from "src/modules/food/entities/food.entity";
 import { OrderItem } from "src/modules/order/entities/order-item.entity";
 import { Order } from "src/modules/order/entities/order.entity";
 import { Restaurant } from "src/modules/restaurant/entities/restaurant.entity";
-import { DataSource , DataSourceOptions} from "typeorm";
+import { DataSource, DataSourceOptions } from "typeorm";
 
 
 export const typeOrmConfig: TypeOrmModuleAsyncOptions = {

@@ -1,4 +1,4 @@
-import { Location } from 'src/common/embedded/entities/location.entity';
+import { Location } from 'src/modules/location/entities/location.entity';
 import { User } from 'src/modules/auth/entities/user.entity';
 import { DeliveryPerson } from 'src/modules/delivery-person/entities/delivery-person.entity';
 import { Restaurant } from 'src/modules/restaurant/entities/restaurant.entity';
@@ -6,15 +6,15 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, On
 import { OrderItem } from './order-item.entity';
 
 enum OrderStatus {
-    PENDING    = "pending",
-    CONFIRMED  = "confirmed",
-    PREPARING  = "preparing",
-    ONTHEWAY   = "onTheWay",
-    DELIVERED  = "delivered"
+    PENDING = "pending",
+    CONFIRMED = "confirmed",
+    PREPARING = "preparing",
+    ONTHEWAY = "onTheWay",
+    DELIVERED = "delivered"
 }
 
 enum PaymentMethod {
-    CASH       = "cash",
+    CASH = "cash",
     CREDITCARD = "creditCard"
 }
 
@@ -70,7 +70,7 @@ export class Order {
         onUpdate: 'CASCADE',
     })
     restaurant!: Restaurant;
-    
+
     @OneToOne((type) => Location, {
         eager: false,
         cascade: true,
@@ -107,8 +107,8 @@ export class Order {
         referencedColumnName: 'id',
     })
     delivery!: DeliveryPerson;
-    
-    @OneToMany((type) => OrderItem, (orderItem) => orderItem.order , {
+
+    @OneToMany((type) => OrderItem, (orderItem) => orderItem.order, {
         eager: false,
         cascade: false,
         onDelete: 'CASCADE',

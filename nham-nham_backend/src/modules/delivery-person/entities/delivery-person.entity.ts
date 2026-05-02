@@ -1,8 +1,8 @@
-import { Location } from 'src/common/embedded/entities/location.entity';
+import { Location } from 'src/modules/location/entities/location.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class DeliveryPerson{
+export class DeliveryPerson {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
@@ -20,20 +20,20 @@ export class DeliveryPerson{
         length: 255,
         nullable: false,
     })
-    phoneNumber!: string; 
+    phoneNumber!: string;
 
-    @OneToOne((type) => Location , {
-      eager: false,
-      cascade: true,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
+    @OneToOne((type) => Location, {
+        eager: false,
+        cascade: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     })
     @JoinColumn({
-      name: 'current_location',
-      referencedColumnName: 'id',
+        name: 'current_location',
+        referencedColumnName: 'id',
     })
     currentLocation!: Location;
-    
-    
-    
+
+
+
 }

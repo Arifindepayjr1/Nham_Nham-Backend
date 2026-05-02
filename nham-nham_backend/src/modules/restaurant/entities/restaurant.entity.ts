@@ -1,9 +1,9 @@
-import { Location } from 'src/common/embedded/entities/location.entity';
+import { Location } from 'src/modules/location/entities/location.entity';
 import { Category } from 'src/modules/category/entities/category.entity';
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, OneToMany } from 'typeorm';
 
 @Entity()
-export class Restaurant{
+export class Restaurant {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
@@ -64,23 +64,23 @@ export class Restaurant{
     createAt!: Date;
 
     @OneToOne((type) => Location, {
-      eager: false,
-      cascade: true,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
+        eager: false,
+        cascade: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     })
     @JoinColumn({
-      name: 'location_id',
-      referencedColumnName: 'id',
-      foreignKeyConstraintName: 'fk_name'
+        name: 'location_id',
+        referencedColumnName: 'id',
+        foreignKeyConstraintName: 'fk_name'
     })
     location!: Location;
 
     @OneToMany((type) => Category, (category) => category.restaurant, {
-      eager: false,
-      cascade: false,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
+        eager: false,
+        cascade: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     })
-    categories!: Category[];    
+    categories!: Category[];
 }

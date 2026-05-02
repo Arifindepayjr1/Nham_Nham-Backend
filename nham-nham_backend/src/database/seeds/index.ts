@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt"; 
+import * as bcrypt from "bcrypt";
 import { ConfigService } from "@nestjs/config";
 import { User } from "src/modules/auth/entities/user.entity";
 import { DeliveryPerson } from "src/modules/delivery-person/entities/delivery-person.entity";
@@ -13,15 +13,15 @@ import { CartItem } from "src/modules/cart/entities/cart-item.entity";
 import { Cart } from "src/modules/cart/entities/cart.entity";
 import { SelectedAddOn } from "src/modules/cart/entities/selected-add-on.entity";
 import { Order } from "src/modules/order/entities/order.entity";
-import { Location } from "src/common/embedded/entities/location.entity";
+import { Location } from "src/modules/location/entities/location.entity";
 import { OrderItem } from "src/modules/order/entities/order-item.entity";
 import * as dotenv from "dotenv";
 
 dotenv.config();
 
 @Injectable()
-class AppSeed{
-    
+class AppSeed {
+
     private DB_HOST;
     private DB_USERNAME;
     private DB_PORT;
