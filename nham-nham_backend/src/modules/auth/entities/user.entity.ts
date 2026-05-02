@@ -1,8 +1,8 @@
-import { Location } from 'src/common/embedded/entities/location.entity';
+import { Location } from 'src/modules/location/entities/location.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
-export class User{
+export class User {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
@@ -38,7 +38,7 @@ export class User{
         length: 255,
         nullable: false,
     })
-    phoneNumber!: string;  
+    phoneNumber!: string;
 
     @CreateDateColumn({
         name: 'create_at',
@@ -48,13 +48,13 @@ export class User{
     createAt!: Date;
 
     @OneToOne((_) => Location, {
-      eager: false,
-      cascade: true,
-      onDelete: 'CASCADE',
+        eager: false,
+        cascade: true,
+        onDelete: 'CASCADE',
     })
     @JoinColumn({
-      name: 'location_id',
-      referencedColumnName: 'id',
+        name: 'location_id',
+        referencedColumnName: 'id',
     })
     location!: Location;
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NhamNham API</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0a0f;
+            font-family: 'Courier New', monospace;
+            color: white;
+        }
+
+        .card {
+            text-align: center;
+            padding: 40px 60px;
+            border-radius: 16px;
+            border: 1px solid #1e1e3a;
+            background: #0c0c1a;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 0.6;
+            }
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #4ade80;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555577;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1><span class="dot"></span>NhamNham API is running</h1>
+        <p>Backend server is up and healthy</p>
+    </div>
+</body>
+
+</html>
