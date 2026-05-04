@@ -4,7 +4,7 @@ import { ExceptionFilterResponse } from './interfaces/exception-response.interfa
 import { QueryFailedError, TypeORMError } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 
-@Catch(HttpException , TypeORMError , NotFoundException)
+@Catch(HttpException , TypeORMError)
 export class AllExceptionFilter implements ExceptionFilter {
     catch(exception: any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
