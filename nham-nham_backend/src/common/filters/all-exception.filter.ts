@@ -1,23 +1,21 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, NotFoundException } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, NotFoundException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ExceptionFilterResponse } from './interfaces/exception-response.interface';
 import { QueryFailedError, TypeORMError } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 
-@Catch(HttpException , TypeORMError)
+@Catch()
 export class AllExceptionFilter implements ExceptionFilter {
     catch(exception: any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();
-        const status = exception.getStatus();
 
         const exceptionResponse: Partial<ExceptionFilterResponse> = {
-            statusCode: status,
             path: request.url,
             timestamp: Date.now().toString(),
             method: request.method,
-            message: exception.getResponse(),
+            message: 'INTERNAL SERVER ERROR',
         };
       
         if (exception instanceof HttpException) {
@@ -34,27 +32,30 @@ export class AllExceptionFilter implements ExceptionFilter {
 
                     switch (errorCode) {
                         case '23505':
-                            return response.json({
+                            return response.status(HttpStatus.CONFLICT).json({
                                 ...exceptionResponse,
-                                statusCode: 409, // 409 : Conflict With Current State Resources In The Server
+                                // 409 : Conflict With Current State Resources In The Server
                                 message: "Duplicate value",
                             })
                         case '23503':
-                            return response.json({
+                            return response.status(HttpStatus.BAD_REQUEST).json({
                                 ...exceptionResponse,
-                                status: 400, // 400 : Cannot Process Due to Client Side Error - Malformed Request Syntax , Invalid Request
+                                // 400 : Cannot Process Due to Client Side Error - Malformed Request Syntax , Invalid Request
                                 message: "Invalid References ( Foreign Key )",
+                            });
+                        case '22P02':
+                            return response.status(HttpStatus.BAD_REQUEST).json({
+                                ...exceptionResponse,
+                                message: "Invalid Data-Type",
                             })
                         default:
-                            return response.json({
+                            return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                                 ...exceptionResponse,
-                                status: 500,
                                 message: "Database Internal Error",
                             })
                     }
                 }
-        return response.json({
-            status: 500,
+        return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "Internal Server Error",
         })
     }
