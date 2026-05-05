@@ -3,8 +3,9 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'ty
 
 @Entity()
 export class DeliveryPerson {
-    @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    
+    @PrimaryGeneratedColumn('increment')
+    id!: number;
 
     @Column({
         name: 'name',
