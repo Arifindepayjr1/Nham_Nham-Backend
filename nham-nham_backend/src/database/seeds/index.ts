@@ -79,7 +79,7 @@ class AppSeed {
             console.log("LOCATION SEEDED");
 
             const deliveryPersonRepo = AppDataSource.getRepository(DeliveryPerson);
-
+            
             const deliveryPersons = deliveryPersonRepo.create([
                 { name: 'Dara Sok', phoneNumber: '012345678', currentLocation: savedLocations[3] },
                 { name: 'Pisach Lim', phoneNumber: '098765432', currentLocation: savedLocations[4] },
