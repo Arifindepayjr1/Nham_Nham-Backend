@@ -1,0 +1,19 @@
+meta {
+  name: Delete Delivery Person
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/delivery-person/:id
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+params:path {
+  id: 18
+}

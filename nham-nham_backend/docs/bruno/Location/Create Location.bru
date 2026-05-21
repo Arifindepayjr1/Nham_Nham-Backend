@@ -1,0 +1,23 @@
+meta {
+  name: Create Location
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/location
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "latitude": 11.5564,
+    "longitude": 104.9282,
+    "address": "Phnom Penh, Cambodia"
+  }
+}

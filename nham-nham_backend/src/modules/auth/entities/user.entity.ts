@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, CreateDat
 @Entity()
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    id?: string;
 
     @Column({
         name: 'user_name',
@@ -45,16 +45,17 @@ export class User {
         type: 'timestamp',
         precision: 3,
     })
-    createAt!: Date;
+    createAt?: Date;
 
     @OneToOne((_) => Location, {
         eager: false,
         cascade: true,
         onDelete: 'CASCADE',
+        nullable: true,
     })
     @JoinColumn({
         name: 'location_id',
         referencedColumnName: 'id',
     })
-    location!: Location;
+    location!: Location | null;
 }

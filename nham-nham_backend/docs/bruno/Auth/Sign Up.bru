@@ -1,0 +1,20 @@
+meta {
+  name: Sign Up
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/auth/sign-up
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "userName": "Sokha Chan",
+    "email": "sokha@test.com",
+    "password": "TEst@1234",
+    "phoneNumber": "+85512345678"
+  }
+}

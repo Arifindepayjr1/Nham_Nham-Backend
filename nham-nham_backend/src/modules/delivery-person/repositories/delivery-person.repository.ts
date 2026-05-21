@@ -62,7 +62,7 @@ export class DeliveryPersonRepository implements IDeliveryPerson {
             ...updateDeliveryPersonData
         };
 
-        this.deliveryPersonRepository.save(updateDeliveryPerson);
+        await this.deliveryPersonRepository.save(updateDeliveryPerson);
         return updateDeliveryPerson;
     }
 

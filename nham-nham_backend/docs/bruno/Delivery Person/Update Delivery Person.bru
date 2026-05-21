@@ -1,0 +1,26 @@
+meta {
+  name: Update Delivery Person
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/delivery-person/:id
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+params:path {
+  id: 18
+}
+
+body:json {
+  {
+    "name": "Sokha Updated",
+    "phoneNumber": "+85598765432"
+  }
+}

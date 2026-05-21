@@ -1,0 +1,27 @@
+meta {
+  name: Update Location
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/location/:id
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+params:path {
+  id: 2
+}
+
+body:json {
+  {
+    "latitude": 11.5564,
+    "longitude": 104.9282,
+    "address": "Phnom Penh Updated"
+  }
+}

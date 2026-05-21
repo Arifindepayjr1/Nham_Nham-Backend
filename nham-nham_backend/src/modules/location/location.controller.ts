@@ -1,9 +1,10 @@
-import { Controller, Get, HttpStatus, ParseIntPipe , Put ,Param, Post, Body, Delete , HttpCode} from '@nestjs/common';
+import { Controller, Get, HttpStatus, ParseIntPipe , Put ,Param, Post, Body, Delete , HttpCode, UseGuards} from '@nestjs/common';
 import { LocationService } from './location.service';
 import { ILocationResponse } from './interface/location.response.interface';
 import { CreateLocationDTO } from './dto/create-location.dto';
 import { Location } from './entities/location.entity';
-
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guards';
+@UseGuards(JwtAuthGuard)
 @Controller('api/location')
 export class LocationController {
     locationResponse: ILocationResponse;

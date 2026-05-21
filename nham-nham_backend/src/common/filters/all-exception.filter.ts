@@ -18,6 +18,23 @@ export class AllExceptionFilter implements ExceptionFilter {
             message: 'INTERNAL SERVER ERROR',
         };
       
+        if (exception?.name === 'TokenExpiredError') {
+            return response.status(401).json({
+                ...exceptionResponse,
+                errorCode: 'TOKEN_EXPIRED',
+                message: 'Access token expired'
+            })
+        }
+
+        if (exception?.name === 'JsonWebTokenError') {
+            return response.status(401).json({
+                ...exceptionResponse,
+                errorCode: 'INVALID_TOKEN',
+                message: 'Invalid access token'
+            })
+        }
+
+
         if (exception instanceof HttpException) {
             const exceptionResponseMessage = exception.getResponse();
                     return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
