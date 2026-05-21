@@ -5,6 +5,7 @@ import { DeliveryPersonRepository } from './repositories/delivery-person.reposit
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliveryPerson } from './entities/delivery-person.entity';
 import { Location } from '../location/entities/location.entity';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guards';
 
 @Module({
     imports: [
@@ -14,6 +15,6 @@ import { Location } from '../location/entities/location.entity';
       ])
   ],
   controllers: [DeliveryPersonController],
-  providers: [DeliveryPersonService , DeliveryPersonRepository]
+  providers: [DeliveryPersonService , DeliveryPersonRepository , JwtAuthGuard,]
 })
 export class DeliveryPersonModule {}

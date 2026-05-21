@@ -8,7 +8,7 @@ export class CreateDeliveryPersonDTO{
     @Expose()
     @Type(() => String)
     @Length(3, 50, {
-        message: '$name should be between longer than 3 and no longer than 50'
+        message: '$property should be between $constraint1 and no longer than $constraint2'
     })
     @IsString({
         message: '$value should be a valid string'
@@ -18,7 +18,7 @@ export class CreateDeliveryPersonDTO{
     @Expose()
     @Type(() => String)
     @IsPhoneNumber('KH', {
-        message: '$value should be a valid Cambodia Format ( +855 .. )'
+        message: '$value should be a valid $constraint Format ( +855 .. )'
     })
     phoneNumber!: string;
 

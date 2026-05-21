@@ -1,10 +1,12 @@
-import { Controller, Get, HttpStatus, Param, ParseIntPipe, Post , Body , Patch, Delete} from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, ParseIntPipe, Post , Body , Patch, Delete, UseGuards} from '@nestjs/common';
 import { IDeliveryPersonResponse } from './interface/delivery-person.reponse.interface';
 import { DeliveryPersonService } from './delivery-person.service';
 import { DeliveryPerson } from './entities/delivery-person.entity';
 import { CreateDeliveryPersonDTO } from './dto/create-delivery-person.dto';
 import { UpdateDeliveryPersonDTO } from './dto/update-delivery-person.dto';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guards';
 
+@UseGuards(JwtAuthGuard)
 @Controller('api/delivery-person')
 export class DeliveryPersonController {
     private deliveryPersonResponse: IDeliveryPersonResponse;

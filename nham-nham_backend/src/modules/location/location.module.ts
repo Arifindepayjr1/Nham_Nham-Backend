@@ -4,15 +4,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Location } from './entities/location.entity';
 import { LocationRepository } from './repositories/location.repository';
 import { LocationController } from './location.controller';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guards';
 
 @Module({
   imports: [
         TypeOrmModule.forFeature([Location],
-      ),
+        ),
     ],
     providers: [
         LocationService,
-        LocationRepository
+        LocationRepository,
+        JwtAuthGuard,
     ],
     controllers: [
         LocationController,
